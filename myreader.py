@@ -26,23 +26,13 @@ def read_f1_season_results(year):
     soup = BeautifulSoup(response.content, "html.parser")
     table = soup.find("table") # Find the table
     
-    
-    season_results = {} # empty dictionary
+    season_results = {} # Empty dictionary
     race_no=0
     
-    for a in table.find_all("a"): # Find all links in the table
+    for a in table.find_all("a"): # Find all links in the table, because they are the links to races
+        race_no+=1
         relativeUrl=a['href']
         race_url=season_url+relativeUrl[28:]
-        print(race_url)
-        df = read_f1_race_result(race_url) # pandas frame for race result
-        print(df)
-        
-        race_no+=1
-        season_results[race_no] = df
+        season_results[race_no] = read_f1_race_result(race_url)
         
     return season_results
-    
-    
-    # string = StringIO(str(table)) # Convert table to string
-    # df = pd.read_html(string) # Convert string to pandas
-    # return df
