@@ -37,13 +37,22 @@ def read_f1_season_results(year):
         
     return season_results
 
+# Helper function to fix driver name: Replace escape code with space, and add space before 3-letter code
+def fix_driver_name(original):
+    fixed = original.replace("\xa0", " ")
+    fixed = fixed[0:-3] + " " + fixed[-3:]
+    return fixed
+
+
 def read_f1_race_to_data_frame():
     file_path="html/1950-1.html"
-    with open(file_path, 'r', encoding='utf-8') as f:
+    with open(file_path, "r", encoding="utf-8") as f:
         html_content = f.read()
-        
-    soup = BeautifulSoup(html_content, 'html.parser')
-    print(soup.title)  # Example: print the <title> tag   
+    soup = BeautifulSoup(html_content, "html.parser")
+    table = soup.find("table") # Find the first table element in the html, because that contains the race result
+    df = pd.read_html(StringIO(str(table)))[0] # Convert table to pandas data frame
+    df["DRIVER"] = df["DRIVER"].apply(fix_driver_name)
+    return df
 
 
 def read_f1_season_to_dictionary(year, dictionary):
@@ -52,9 +61,9 @@ def read_f1_season_to_dictionary(year, dictionary):
 
 
 # Read the result for a single F1 race from formula1.com to html file
-def read_f1_race_to_html_file(race_url, filename):
+def read_f1_race_to_html_file(race_url, file_path):
     response = requests.get(race_url)
-    with open(filename, "wb") as f:
+    with open(file_path, "wb") as f:
             f.write(response.content)
 
 # Read the results of all F1 races of a season from formula1.com to html files
@@ -62,12 +71,12 @@ def read_f1_season_to_html_files(year, directory):
     season_url = "https://www.formula1.com/en/results/" + str(year) + "/races"
     response = requests.get(season_url)
     soup = BeautifulSoup(response.content, "html.parser")
-    table = soup.find("table") # Find the first table element in the html, because that contains the race overview
-    race_no=0
+    table = soup.find("table") # Find the first table element in the html, because that contains the season overview
+    race_no = 0
     for a in table.find_all("a"): # Find all the a elements in the table, because they are the links to the races
         race_no += 1
         url = a['href']
         race_url = season_url + url[28:]
-        filename = directory + str(year) + "-" + str(race_no) + ".html"
-        read_f1_race_to_html_file(race_url, filename)
+        file_path = directory + str(year) + "-" + str(race_no) + ".html"
+        read_f1_race_to_html_file(race_url, file_path)
         
