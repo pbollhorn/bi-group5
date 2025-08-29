@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
@@ -43,9 +44,9 @@ def fix_driver_name(original):
     fixed = fixed[0:-3] + " " + fixed[-3:]
     return fixed
 
-
-def read_f1_race_to_data_frame():
-    file_path="html/1950-1.html"
+# Read the result for a single F1 race from html file to data frame
+def read_f1_race_to_data_frame(file_path):
+    # file_path="html/1950-1.html"
     with open(file_path, "r", encoding="utf-8") as f:
         html_content = f.read()
     soup = BeautifulSoup(html_content, "html.parser")
@@ -54,9 +55,20 @@ def read_f1_race_to_data_frame():
     df["DRIVER"] = df["DRIVER"].apply(fix_driver_name)
     return df
 
-
-def read_f1_season_to_dictionary(year, dictionary):
-    return 0
+# Read the results of all F1 races of a season from html files to a dictionary of data frames
+def read_f1_season_to_dictionary(year, directory):
+    
+    race_no = 0
+    season = {}
+    
+    while True:
+        race_no += 1
+        file_path = directory + str(year) + "-" + str(race_no) + ".html"
+        if not os.path.exists(file_path):
+            break
+        season[race_no] = read_f1_race_to_data_frame(file_path)
+    
+    return season
     
 
 
