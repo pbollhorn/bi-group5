@@ -37,6 +37,20 @@ def read_f1_season_results(year):
         
     return season_results
 
+def read_f1_race_to_data_frame():
+    file_path="html/1950-1.html"
+    with open(file_path, 'r', encoding='utf-8') as f:
+        html_content = f.read()
+        
+    soup = BeautifulSoup(html_content, 'html.parser')
+    print(soup.title)  # Example: print the <title> tag   
+
+
+def read_f1_season_to_dictionary(year, dictionary):
+    return 0
+    
+
+
 # Read the result for a single F1 race from formula1.com to html file
 def read_f1_race_to_html_file(race_url, filename):
     response = requests.get(race_url)
