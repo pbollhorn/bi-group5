@@ -53,13 +53,15 @@ def read_f1_race_from_html_file_to_data_frame(file_path):
     
     df.attrs["race_title"] = soup.title.text[:-14]
     
-    df["DRIVER"] = df["DRIVER"].apply(fix_driver_name)
-    
     # Delete last row if it just contains a note, and instead add the note as metadata
     last = df["POS."].iloc[-1]
     if isinstance(last, str) and len(last)>=4:
         df.attrs["race_note"] = last
         df = df.iloc[:-1]
+    
+    df["DRIVER"] = df["DRIVER"].apply(fix_driver_name)
+    
+    df["PTS."] = df["PTS."].apply(float)
         
     return df
 
