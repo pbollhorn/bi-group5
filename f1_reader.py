@@ -57,7 +57,7 @@ def read_f1_race_from_html_file_to_data_frame(file_path):
     
     # Delete last row if it just contains a note, and instead add the note as metadata
     last = df["POS."].iloc[-1]
-    if isinstance(last, str) and last.startswith("Note "):
+    if isinstance(last, str) and len(last)>=4:
         df.attrs["race_note"] = last
         df = df.iloc[:-1]
         
