@@ -4,42 +4,6 @@ import requests
 from bs4 import BeautifulSoup
 from io import StringIO
 
-def read_csv_file_to_data_frame(file_path):
-    df = pd.read_csv(file_path)
-    return df
-
-def read_excel_file_to_data_frame(file_path):
-    df = pd.read_excel(file_path)
-    return df
-
-
-# def read_f1_race_result(race_url):
-#     response = requests.get(race_url)
-#     soup = BeautifulSoup(response.content, "html.parser")
-#     table = soup.find("table") # Find the table
-#     string = StringIO(str(table)) # Convert table to string
-#     df = pd.read_html(string)[0] # Convert string to pandas dataframe
-#     return df
-
-# def read_f1_season_results(year):
-#     season_url = "https://www.formula1.com/en/results/" + str(year) + "/races"
-#     response = requests.get(season_url)
-#     soup = BeautifulSoup(response.content, "html.parser")
-#     table = soup.find("table") # Find the table
-    
-#     season_results = {} # Empty dictionary
-#     race_no=0
-    
-#     for a in table.find_all("a"): # Find all links in the table, because they are the links to races
-#         race_no+=1
-#         relativeUrl=a['href']
-#         race_url=season_url+relativeUrl[28:]
-#         season_results[race_no] = read_f1_race_result(race_url)
-        
-#     return season_results
-
-
-
 # Read the result for a F1 race from html file to data frame,
 # and then clean up the data in the data frame.
 # race_title and race_note are added as metadata (attrs) to the data frame.
