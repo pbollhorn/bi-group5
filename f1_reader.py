@@ -13,48 +13,64 @@ def readExcelWorksheetIntoDataFrame(filename):
     return df
 
 
-def read_f1_race_result(race_url):
-    response = requests.get(race_url)
-    soup = BeautifulSoup(response.content, "html.parser")
-    table = soup.find("table") # Find the table
-    string = StringIO(str(table)) # Convert table to string
-    df = pd.read_html(string)[0] # Convert string to pandas dataframe
-    return df
+# def read_f1_race_result(race_url):
+#     response = requests.get(race_url)
+#     soup = BeautifulSoup(response.content, "html.parser")
+#     table = soup.find("table") # Find the table
+#     string = StringIO(str(table)) # Convert table to string
+#     df = pd.read_html(string)[0] # Convert string to pandas dataframe
+#     return df
 
-def read_f1_season_results(year):
-    season_url = "https://www.formula1.com/en/results/" + str(year) + "/races"
-    response = requests.get(season_url)
-    soup = BeautifulSoup(response.content, "html.parser")
-    table = soup.find("table") # Find the table
+# def read_f1_season_results(year):
+#     season_url = "https://www.formula1.com/en/results/" + str(year) + "/races"
+#     response = requests.get(season_url)
+#     soup = BeautifulSoup(response.content, "html.parser")
+#     table = soup.find("table") # Find the table
     
-    season_results = {} # Empty dictionary
-    race_no=0
+#     season_results = {} # Empty dictionary
+#     race_no=0
     
-    for a in table.find_all("a"): # Find all links in the table, because they are the links to races
-        race_no+=1
-        relativeUrl=a['href']
-        race_url=season_url+relativeUrl[28:]
-        season_results[race_no] = read_f1_race_result(race_url)
+#     for a in table.find_all("a"): # Find all links in the table, because they are the links to races
+#         race_no+=1
+#         relativeUrl=a['href']
+#         race_url=season_url+relativeUrl[28:]
+#         season_results[race_no] = read_f1_race_result(race_url)
         
-    return season_results
+#     return season_results
 
 
 
-# Read the result for a single F1 race from html file to data frame
+# Read the result for a F1 race from html file to data frame,
+# and then clean up the data in the data frame.
+# race_title and race_note are added as metadata (attrs) to the data frame.
 def read_f1_race_from_html_file_to_data_frame(file_path):
+    
     with open(file_path, "r", encoding="utf-8") as f:
         html_content = f.read()
     soup = BeautifulSoup(html_content, "html.parser")
-    table = soup.find("table") # Find the first table element in the html, because that contains the race result
-    df = pd.read_html(StringIO(str(table)))[0] # Convert table to pandas data frame
+    table = soup.find("table")
+    df = pd.read_html(StringIO(str(table)))[0]
+    
+    df.attrs["race_title"] = soup.title.text[:-14]
     
     df["DRIVER"] = df["DRIVER"].apply(fix_driver_name)
     
-    # Check if last row in "POS." starts with "Note "
+    # Delete last row if it just contains a note, and instead add the note as metadata
     if df["POS."].iloc[-1].startswith("Note "):
-        df = df.iloc[:-1]  # Drop the last row
-    
+        note = df["POS."].iloc[-1]
+        df = df.iloc[:-1]
+        df.attrs["race_note"] = note
+        
     return df
+
+
+# Helper function to fix driver name:
+# - Replace escape code with space
+# - Add space before 3-letter code
+def fix_driver_name(original):
+    fixed = original.replace("\xa0", " ")
+    fixed = fixed[0:-3] + " " + fixed[-3:]
+    return fixed
 
 
 # Read the results of all F1 races of a season from html files to a dictionary of data frames
@@ -93,10 +109,3 @@ def read_f1_season_from_website_to_html_files(year, directory):
         race_url = season_url + href[28:]
         file_path = os.path.join(directory, f"{year}-{race_no}.html")
         read_f1_race_from_website_to_html_file(race_url, file_path)
-        
-
-# Helper function to fix driver name: Replace escape code with space, and add space before 3-letter code
-def fix_driver_name(original):
-    fixed = original.replace("\xa0", " ")
-    fixed = fixed[0:-3] + " " + fixed[-3:]
-    return fixed
