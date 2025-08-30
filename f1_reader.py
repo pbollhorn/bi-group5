@@ -4,12 +4,12 @@ import requests
 from bs4 import BeautifulSoup
 from io import StringIO
 
-def readCsvFileIntoDataFrame(filename):
-    df = pd.read_csv(filename)
+def read_csv_file_to_data_frame(file_path):
+    df = pd.read_csv(file_path)
     return df
 
-def readExcelWorksheetIntoDataFrame(filename):
-    df = pd.read_excel(filename)
+def read_excel_file_to_data_frame(file_path):
+    df = pd.read_excel(file_path)
     return df
 
 
