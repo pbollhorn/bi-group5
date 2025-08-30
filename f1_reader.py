@@ -56,10 +56,10 @@ def read_f1_race_from_html_file_to_data_frame(file_path):
     df["DRIVER"] = df["DRIVER"].apply(fix_driver_name)
     
     # Delete last row if it just contains a note, and instead add the note as metadata
-    if df["POS."].iloc[-1].startswith("Note "):
-        note = df["POS."].iloc[-1]
+    last = df["POS."].iloc[-1]
+    if isinstance(last, str) and last.startswith("Note "):
+        df.attrs["race_note"] = last
         df = df.iloc[:-1]
-        df.attrs["race_note"] = note
         
     return df
 
@@ -89,7 +89,7 @@ def read_f1_season_from_html_files_to_dictionary(year, directory):
     return season
     
     
-# Read the result for a single F1 race from formula1.com to html file
+# Read the result for a F1 race from formula1.com to html file
 def read_f1_race_from_website_to_html_file(race_url, file_path):
     response = requests.get(race_url)
     with open(file_path, "wb") as f:
