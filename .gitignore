@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,jupyternotebooks,python
 
 # Folder with F1 race data as html
-html/
+mp1/html/
 
 ### JupyterNotebooks ###
 # gitignore template for Jupyter Notebooks
