@@ -4,6 +4,9 @@
 # Folder with F1 race data as html
 mp1/html/
 
+# Excel temporary files
+~$*.xlsx
+
 ### JupyterNotebooks ###
 # gitignore template for Jupyter Notebooks
 # website: http://jupyter.org/
