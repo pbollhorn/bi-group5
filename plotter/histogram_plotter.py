@@ -19,10 +19,8 @@ def plot_histogram(data):
     p = norm.pdf(x, mean, std)
 
     plt.plot(x, p, 'k', linewidth=2)
-    # title = "Fit Values: {:.2f} and {:.2f}".format(mean, std)
-    # plt.title(title)
 
-    plt.show()
+    # plt.show()
     
     
     
@@ -37,18 +35,21 @@ def plot_histograms_for_data_frame(df):
     nrows = int(np.ceil(num_cols / ncols))
 
     # Create figure and axes
+    # fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=(15, 5 * nrows))
     fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=(15, 5 * nrows))
     axes = axes.flatten()  # Flatten in case it's 2D
+    
+    print(axes)
 
     # Loop through columns and plot
     for i, column in enumerate(df.columns):
         plt.sca(axes[i])  # Set current axis
         plot_histogram(df[column])
-        axes[i].set_title(column)
+        # axes[i].set_title(column)
 
-    # Hide any unused subplots
-    for j in range(i + 1, len(axes)):
-        fig.delaxes(axes[j])
+    # # Hide any unused subplots
+    # for j in range(i + 1, len(axes)):
+    #     fig.delaxes(axes[j])
 
     plt.tight_layout()
     plt.show()
