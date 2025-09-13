@@ -8,10 +8,9 @@ Contents of the repo:
   - **read_from_formula1_website.ipynb** - Notebook that reads race results from formula1.com to HTML files.
   - **PointsScoringSystems.xlsx** - Excel file with the different points scoring systems used in Formula 1 throughout the years.
   - **html_samples** - Folder with a sample of 3 HTML files. (Not all the HTML files are included in this repo, because there are 1128 of them, and in total they take up 600 MB.)
-
 - **mp2** - Folder with my solution for Mini Project 2:
   - **mini_project_2.ipynb** - Notebook that presents my solution to the project.
-
+  - **cortez_et_al_2009** - Folder with this journal article and corresponding dataset: Cortez et al. (2009) "Modeling wine preferences by data mining from physicochemical properties". Decision Support Systems, Volume 47, Issue 4, Pages 547-553. DOI: 10.1016/j.dss.2009.05.016
 - **reader** - My package for the reading functionality I use in the mini projects:
   - **f1_reader.py** - Module which reads Formula 1 data.
   - **generic_reader.py** - Module which reads generic CSV files and Excel files.
