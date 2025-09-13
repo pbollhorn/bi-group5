@@ -24,7 +24,3 @@ def plot_normal_fit(data):
     plt.title(title)
 
     plt.show()
-    
-    
-    
-def 
