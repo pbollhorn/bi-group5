@@ -2,9 +2,20 @@
 
 Group members: Peter Bollhorn
 
-This is my Mini Project 1.
-
 Contents of the repo:
+- mp1: Folder with my solution for Mini Project 1
+  - **mini_project_1.ipynb**: Notebook that presents my solution to project.
+- mp2: Folder with my solution for Mini Project 2
+- reader: Folder with my package for the reading functionality I use in the mini projects
+
+
+
+
+
+
+
+
+
 - **mini_project_1.ipynb**: Notebook that presents my solution to project.
 - **read_from_formula1_website.ipynb**: Notebook that reads race results from formula1.com to HTML files.
 - **f1_reader.py**: Module which reads Formula 1 data.
