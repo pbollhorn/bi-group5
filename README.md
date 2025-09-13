@@ -2,7 +2,7 @@
 
 Group members: Peter Bollhorn
 
-Contents of the repo:
+Contents of this repo:
 - **mp1** - Folder with my solution for Mini Project 1:
   - **mini_project_1.ipynb** - Notebook that presents my solution to the project.
   - **read_from_formula1_website.ipynb** - Notebook that reads race results from formula1.com to HTML files.
