@@ -25,7 +25,7 @@ def plot_histogram(data):
 # Function for plotting histograms with normal curve fitted for all numeric columns in a data frame
 def plot_histograms_for_data_frame(df):
 
-    # Drop all columns in data frame that are not numeric
+    # Drop all columns in the data frame that are not numeric
     df = df.select_dtypes(include=[np.number])
 
     # Number of plots to make (one plot for each column in the data frame)
