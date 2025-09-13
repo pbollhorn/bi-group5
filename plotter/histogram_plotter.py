@@ -27,25 +27,22 @@ def plot_histogram(data):
 # Function for plotting histograms with normal curve fitted for all numeric columns in a data frame
 def plot_histograms_for_data_frame(df):
 
-    # Number of columns to plot
-    num_cols = len(df.columns)
+    # Number of plots to make (one plot for each column in the data frame)
+    num_plots = len(df.columns)
 
     # Determine subplot grid size
     ncols = 3
-    nrows = int(np.ceil(num_cols / ncols))
+    nrows = int(np.ceil(num_plots / ncols))
 
     # Create figure and axes
-    # fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=(15, 5 * nrows))
     fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=(15, 5 * nrows))
     axes = axes.flatten()  # Flatten in case it's 2D
-    
-    print(axes)
 
     # Loop through columns and plot
     for i, column in enumerate(df.columns):
         plt.sca(axes[i])  # Set current axis
         plot_histogram(df[column])
-        # axes[i].set_title(column)
+        axes[i].set_title(column)
 
     # # Hide any unused subplots
     # for j in range(i + 1, len(axes)):
