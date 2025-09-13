@@ -3,7 +3,7 @@
 Group members: Peter Bollhorn
 
 Contents of the repo:
-- **mp1**: Folder with my solution for Mini Project 1.
+- **mp1** - Folder with my solution for Mini Project 1.
   - **mini_project_1.ipynb**: Notebook that presents my solution to project.
   - **read_from_formula1_website.ipynb**: Notebook that reads race results from formula1.com to HTML files.
   - **PointsScoringSystems.xlsx**: Excel file with the different points scoring systems used in Formula 1 throughout the years.
