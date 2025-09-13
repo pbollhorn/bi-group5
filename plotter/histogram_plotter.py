@@ -19,8 +19,6 @@ def plot_histogram(data):
     p = norm.pdf(x, mean, std)
 
     plt.plot(x, p, 'k', linewidth=2)
-
-    # plt.show()
     
     
     
@@ -49,4 +47,3 @@ def plot_histograms_for_data_frame(df):
     #     fig.delaxes(axes[j])
 
     plt.tight_layout()
-    plt.show()
